@@ -11,6 +11,8 @@ import Connectivity.connectDB;
 import Java.Users;
 import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,9 +41,6 @@ public class Controller {
 
     @FXML
     private AnchorPane rootPane;
-
-    @FXML
-    private Button btnSearch;
 
     @FXML
     private Button btnAdd;
@@ -68,6 +68,10 @@ public class Controller {
 
     @FXML
     private TextField tfUserBooks;
+
+    @FXML
+    private TextField tfSearch;
+
 
     @FXML
     private Button btnTableUsers;
@@ -103,6 +107,7 @@ public class Controller {
     }
 
     ObservableList<Users> listM;
+    ObservableList<Users> dataList;
 
     int index = -1;
 
@@ -110,21 +115,37 @@ public class Controller {
     ResultSet rs = null;
     PreparedStatement preparedStatement = null;
 
+    @FXML
+    void getSelected(MouseEvent event){
+        index=tableUsers.getSelectionModel().getSelectedIndex();
+        if (index <= -1){
 
+            return;
+        }
+        tfUserID.setText(userID.getCellData(index).toString());
+        tfUserName.setText(userName.getCellData(index).toString());
+        tfUserDocument.setText(userDocument.getCellData(index).toString());
+        tfUserPhone.setText(userPhone.getCellData(index).toString());
+        tfUserAddress.setText(userAddress.getCellData(index).toString());
+        tfUserBooks.setText(userBooks.getCellData(index).toString());
+
+    }
 
     @FXML
     public void addUsers(ActionEvent event){
 
         connection = connectDB.getConnection();
-        String sql = "insert into users (userName,userDocument,userPhone,userAddress,userBooks) values(?,?,?,?,?)";
+        String sql = "insert into users (userID,userName,userDocument,userPhone,userAddress,userBooks) values(?,?,?,?,?,?)";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,tfUserName.getText());
-            preparedStatement.setString(2,tfUserDocument.getText());
-            preparedStatement.setString(3,tfUserPhone.getText());
-            preparedStatement.setString(4,tfUserAddress.getText());
-            preparedStatement.setString(5,tfUserBooks.getText());
+            preparedStatement.setInt(1, Integer.parseInt(tfUserID.getText()));
+            preparedStatement.setString(2,tfUserName.getText());
+            preparedStatement.setString(3,tfUserDocument.getText());
+            preparedStatement.setString(4,tfUserPhone.getText());
+            preparedStatement.setString(5,tfUserAddress.getText());
+            preparedStatement.setString(6,tfUserBooks.getText());
             preparedStatement.execute();
+            UpdateTableUsers();
 
             JOptionPane.showMessageDialog(null,"User has added successfully");
         }catch (Exception e){
@@ -134,23 +155,47 @@ public class Controller {
     }
 
     @FXML
-    public void updateUsers(ActionEvent event){
+    public void deleteUsers(ActionEvent event){
 
         connection = connectDB.getConnection();
-        String sql = "insert into users (userName,userDocument,userPhone,userAddress,userBooks) values(?,?,?,?,?)";
+        String sql = "delete from users where userid=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,tfUserName.getText());
-            preparedStatement.setString(2,tfUserDocument.getText());
-            preparedStatement.setString(3,tfUserPhone.getText());
-            preparedStatement.setString(4,tfUserAddress.getText());
-            preparedStatement.setString(5,tfUserBooks.getText());
+            preparedStatement.setInt(1, Integer.parseInt(tfUserID.getText()));
             preparedStatement.execute();
+            JOptionPane.showMessageDialog(null,"User has deleted successfully");
+            UpdateTableUsers();
 
-            JOptionPane.showMessageDialog(null,"User has added successfully");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
+
+    }
+
+    @FXML
+    public void updateUsers(ActionEvent event){
+
+        try {
+            connection = connectDB.getConnection();
+            int value1=Integer.parseInt(tfUserID.getText());
+            String value2=tfUserName.getText();
+            String value3=tfUserDocument.getText();
+            String value4=tfUserPhone.getText();
+            String value5=tfUserAddress.getText();
+            String value6=tfUserBooks.getText();
+
+            String sql = "update users set userId='" + value1 + "',username='" +
+                    value2 + "',userdocument='" + value3 + "',userphone='" + value4 + "',useraddress='" +
+                    value5 + "',userbooks='" + value6 + "'where userid='" + value1+"' ";
+            preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.execute();
+            JOptionPane.showMessageDialog(null,"User has edited successfully");
+            UpdateTableUsers();
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+
 
     }
 
@@ -192,8 +237,21 @@ public class Controller {
         }
     }
 
+    public void UpdateTableUsers(){
+            userID.setCellValueFactory((new PropertyValueFactory<Users,Integer>("userID")));
+            userName.setCellValueFactory((new PropertyValueFactory<Users,String>("userName")));
+            userDocument.setCellValueFactory((new PropertyValueFactory<Users,String>("userDocument")));
+            userPhone.setCellValueFactory((new PropertyValueFactory<Users,String>("userPhone")));
+            userAddress.setCellValueFactory((new PropertyValueFactory<Users,String>("userAddress")));
+            userBooks.setCellValueFactory((new PropertyValueFactory<Users,String>("userBooks")));
+
+            listM = connectDB.getDataUsers();
+            tableUsers.setItems(listM);
+            searchUser();
+    }
+
     @FXML
-    void initialize() {
+    void searchUser(){
         userID.setCellValueFactory((new PropertyValueFactory<Users,Integer>("userID")));
         userName.setCellValueFactory((new PropertyValueFactory<Users,String>("userName")));
         userDocument.setCellValueFactory((new PropertyValueFactory<Users,String>("userDocument")));
@@ -201,7 +259,43 @@ public class Controller {
         userAddress.setCellValueFactory((new PropertyValueFactory<Users,String>("userAddress")));
         userBooks.setCellValueFactory((new PropertyValueFactory<Users,String>("userBooks")));
 
-        listM = connectDB.getDataUsers();
-        tableUsers.setItems(listM);
+        dataList = connectDB.getDataUsers();
+        tableUsers.setItems(dataList);
+        FilteredList<Users> filteredData = new FilteredList<>(dataList, b -> true);
+        tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(person -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (person.getUserName().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                    return true;
+                } else if (person.getUserDocument().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else if (person.getUserPhone().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                    return true;
+                } else if (person.getUserAddress().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                    return true;
+                } else if (person.getUserBooks().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                    return true;
+                }
+
+
+                else
+                    return false; // Does not match.
+            });
+        });
+        SortedList<Users> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableUsers.comparatorProperty());
+        tableUsers.setItems(sortedData);
     }
+
+    @FXML
+    void initialize() {
+        UpdateTableUsers();
+        searchUser();
+    }
+
+
 }

@@ -16,10 +16,9 @@
          <children>
             <HBox alignment="TOP_CENTER" layoutX="11.0" layoutY="300.0" prefHeight="26.0" prefWidth="234.0" spacing="12.0">
                <children>
-                  <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#getOnAction" text="Search" />
                   <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addUsers" text="Add" />
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#getOnAction" text="Delete" />
-                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#getOnAction" text="Update" />
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteUsers" text="Delete" />
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateUsers" text="Update" />
                </children>
             </HBox>
             <VBox layoutX="54.0" layoutY="33.0" spacing="12.0">
@@ -47,9 +46,10 @@
                   <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#btnTableBooks" text="Books" />
                </children>
             </HBox>
+            <TextField fx:id="tfSearch" layoutX="556.0" layoutY="38.0" promptText="Search" AnchorPane.leftAnchor="556.0" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tableUsers" layoutX="272.0" layoutY="109.0" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
+      <TableView fx:id="tableUsers" layoutX="272.0" layoutY="109.0" onMouseClicked="#getSelected" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
         <columns>
           <TableColumn fx:id="userID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="34.39996337890625" text="ID" />
           <TableColumn fx:id="userName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="84.79998779296875" text="Username" />

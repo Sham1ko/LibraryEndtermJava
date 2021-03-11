@@ -16,9 +16,8 @@
          <children>
             <HBox alignment="TOP_CENTER" layoutX="11.0" layoutY="300.0" prefHeight="26.0" prefWidth="234.0" spacing="12.0">
                <children>
-                  <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#getOnAction" text="Search" />
-                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addUsers" text="Add" />
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#getOnAction" text="Delete" />
+                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addBooks" text="Add" />
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteBooks" text="Delete" />
                   <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#getOnAction" text="Update" />
                </children>
             </HBox>

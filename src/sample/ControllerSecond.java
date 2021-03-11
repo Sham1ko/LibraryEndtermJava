@@ -26,6 +26,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
+
 public class ControllerSecond {
 
     @FXML
@@ -88,13 +90,47 @@ public class ControllerSecond {
     @FXML
     private TableColumn<Books, String> bookYear;
 
+
     @FXML
-    void addUsers(ActionEvent event) {
+    void getOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void getOnAction(ActionEvent event) {
+    public void addBooks(ActionEvent event){
+
+        connection = connectDB.getConnection();
+        String sql = "insert into books (bookName,bookAuthor,bookGenre,bookYear) values(?,?,?,?)";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,tfBookName.getText());
+            preparedStatement.setString(2,tfBookAuthor.getText());
+            preparedStatement.setString(3,tfBookGenre.getText());
+            preparedStatement.setString(4,tfBookYear.getText());
+            preparedStatement.execute();
+
+            JOptionPane.showMessageDialog(null,"Book has added successfully");
+            UpdateTableBooks();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+
+    }
+
+    @FXML
+    public void deleteBooks(ActionEvent event){
+
+        connection = connectDB.getConnection();
+        String sql = "delete from books where bookid=?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(tfBookID.getText()));
+            preparedStatement.execute();
+            JOptionPane.showMessageDialog(null,"Book has deleted successfully");
+            UpdateTableBooks();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
 
     }
 
@@ -144,9 +180,7 @@ public class ControllerSecond {
     ResultSet rs = null;
     PreparedStatement preparedStatement = null;
 
-
-    @FXML
-    void initialize() {
+    public void UpdateTableBooks(){
         bookID.setCellValueFactory((new PropertyValueFactory<Books,Integer>("bookID")));
         bookName.setCellValueFactory((new PropertyValueFactory<Books,String>("bookName")));
         bookAuthor.setCellValueFactory((new PropertyValueFactory<Books,String>("bookAuthor")));
@@ -155,5 +189,10 @@ public class ControllerSecond {
 
         listN = connectDB.getDataBooks();
         tableBooks.setItems(listN);
+    }
+
+    @FXML
+    void initialize() {
+        UpdateTableBooks();
     }
 }
