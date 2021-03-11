@@ -45,9 +45,10 @@
                   <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#getOnAction" text="Books" />
                </children>
             </HBox>
+            <TextField fx:id="tfSearch" layoutX="554.0" layoutY="38.0" promptText="Search" AnchorPane.leftAnchor="556.0" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tableBooks" layoutX="272.0" layoutY="109.0" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
+      <TableView fx:id="tableBooks" layoutX="272.0" layoutY="109.0" onMouseClicked="#getSelected" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
         <columns>
           <TableColumn fx:id="bookID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="34.39996337890625" text="ID" />
           <TableColumn fx:id="bookName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="115.20001220703125" text="Bookname" />

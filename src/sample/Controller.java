@@ -116,22 +116,6 @@ public class Controller {
     PreparedStatement preparedStatement = null;
 
     @FXML
-    void getSelected(MouseEvent event){
-        index=tableUsers.getSelectionModel().getSelectedIndex();
-        if (index <= -1){
-
-            return;
-        }
-        tfUserID.setText(userID.getCellData(index).toString());
-        tfUserName.setText(userName.getCellData(index).toString());
-        tfUserDocument.setText(userDocument.getCellData(index).toString());
-        tfUserPhone.setText(userPhone.getCellData(index).toString());
-        tfUserAddress.setText(userAddress.getCellData(index).toString());
-        tfUserBooks.setText(userBooks.getCellData(index).toString());
-
-    }
-
-    @FXML
     public void addUsers(ActionEvent event){
 
         connection = connectDB.getConnection();
@@ -195,7 +179,21 @@ public class Controller {
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
+    }
 
+    @FXML
+    void getSelected(MouseEvent event){
+        index=tableUsers.getSelectionModel().getSelectedIndex();
+        if (index <= -1){
+
+            return;
+        }
+        tfUserID.setText(userID.getCellData(index).toString());
+        tfUserName.setText(userName.getCellData(index).toString());
+        tfUserDocument.setText(userDocument.getCellData(index).toString());
+        tfUserPhone.setText(userPhone.getCellData(index).toString());
+        tfUserAddress.setText(userAddress.getCellData(index).toString());
+        tfUserBooks.setText(userBooks.getCellData(index).toString());
 
     }
 
@@ -269,15 +267,15 @@ public class Controller {
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (person.getUserName().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                if (person.getUserName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (person.getUserDocument().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                } else if (person.getUserDocument().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (person.getUserPhone().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                } else if (person.getUserPhone().toLowerCase().contains(lowerCaseFilter)){
                     return true;
-                } else if (person.getUserAddress().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                } else if (person.getUserAddress().toLowerCase().contains(lowerCaseFilter)){
                     return true;
-                } else if (person.getUserBooks().toLowerCase().indexOf(lowerCaseFilter)!=-1){
+                } else if (person.getUserBooks().toLowerCase().contains(lowerCaseFilter)){
                     return true;
                 }
 
@@ -296,6 +294,4 @@ public class Controller {
         UpdateTableUsers();
         searchUser();
     }
-
-
 }
