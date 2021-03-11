@@ -9,40 +9,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <AnchorPane layoutY="97.0" prefHeight="415.0" prefWidth="256.0" style="-fx-background-color: #ff8c00;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="97.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="26.0" layoutY="14.0" spacing="12.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="14.0" />
-            <HBox alignment="TOP_CENTER" layoutX="11.0" layoutY="280.0" prefHeight="26.0" prefWidth="234.0" spacing="12.0">
+            <HBox alignment="TOP_CENTER" layoutX="11.0" layoutY="300.0" prefHeight="26.0" prefWidth="234.0" spacing="12.0">
                <children>
                   <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#getOnAction" text="Search" />
-                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#getOnAction" text="Add" />
+                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addUsers" text="Add" />
                   <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#getOnAction" text="Delete" />
-                  <Button fx:id="updateUser" mnemonicParsing="false" onAction="#getOnAction" text="Update" />
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#getOnAction" text="Update" />
                </children>
             </HBox>
-            <VBox layoutX="134.0" layoutY="35.0" spacing="12.0">
+            <VBox layoutX="54.0" layoutY="33.0" spacing="12.0">
                <children>
-                  <TextField fx:id="tfUserID" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="tfUserName" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="tfUserDocument" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="tfUserPhone" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="tfUserAddress" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="tfUserBooks" prefHeight="26.0" prefWidth="95.0" />
-               </children>
-            </VBox>
-            <VBox layoutX="35.0" layoutY="37.0" spacing="22.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Document ID" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books" />
+                  <TextField fx:id="tfUserID" promptText="ID" />
+                  <TextField fx:id="tfUserName" promptText="Username" />
+                  <TextField fx:id="tfUserDocument" promptText="Document ID" />
+                  <TextField fx:id="tfUserPhone" promptText="Phone" />
+                  <TextField fx:id="tfUserAddress" promptText="Address" />
+                  <TextField fx:id="tfUserBooks" promptText="Books" />
                </children>
             </VBox>
          </children>
@@ -57,17 +44,16 @@
             <HBox layoutX="420.0" layoutY="38.0" spacing="12.0">
                <children>
                   <Button fx:id="btnTableUsers" mnemonicParsing="false" onAction="#getOnAction" prefHeight="26.0" prefWidth="48.0" text="Users" />
-                  <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#getOnAction" text="Books" />
+                  <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#btnTableBooks" text="Books" />
                </children>
             </HBox>
          </children>
       </AnchorPane>
-      <HBox layoutX="139.0" layoutY="110.0" spacing="16.0" />
       <TableView fx:id="tableUsers" layoutX="272.0" layoutY="109.0" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
         <columns>
           <TableColumn fx:id="userID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="34.39996337890625" text="ID" />
-          <TableColumn fx:id="userName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="84.79998779296875" text="User_name" />
-            <TableColumn fx:id="userDocument" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.4000244140625" text="Document_ID" />
+          <TableColumn fx:id="userName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="84.79998779296875" text="Username" />
+            <TableColumn fx:id="userDocument" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.4000244140625" text="Document ID" />
             <TableColumn fx:id="userPhone" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="67.20001220703125" text="Phone" />
             <TableColumn fx:id="userAddress" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="72.79998779296875" text="Address" />
             <TableColumn fx:id="userBooks" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="83.199951171875" resizable="false" text="Books" />

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane fx:id="booksView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ControllerSecond">
    <children>
       <AnchorPane layoutY="97.0" prefHeight="415.0" prefWidth="256.0" style="-fx-background-color: #ff8c00;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="97.0">
          <children>
@@ -24,12 +24,11 @@
             </HBox>
             <VBox layoutX="54.0" layoutY="33.0" spacing="12.0">
                <children>
-                  <TextField fx:id="tfUserID" promptText="ID" />
-                  <TextField fx:id="tfUserName" promptText="Username" />
-                  <TextField fx:id="tfUserDocument" promptText="Document ID" />
-                  <TextField fx:id="tfUserPhone" promptText="Phone" />
-                  <TextField fx:id="tfUserAddress" promptText="Address" />
-                  <TextField fx:id="tfUserBooks" promptText="Books" />
+                  <TextField fx:id="tfBookID" promptText="ID" />
+                  <TextField fx:id="tfBookName" promptText="Name of Book" />
+                  <TextField fx:id="tfBookAuthor" promptText="Author" />
+                  <TextField fx:id="tfBookGenre" promptText="Genre" />
+                  <TextField fx:id="tfBookYear" promptText="Year" />
                </children>
             </VBox>
          </children>
@@ -43,20 +42,19 @@
             </Label>
             <HBox layoutX="420.0" layoutY="38.0" spacing="12.0">
                <children>
-                  <Button fx:id="btnTableUsers" mnemonicParsing="false" onAction="#getOnAction" prefHeight="26.0" prefWidth="48.0" text="Users" />
-                  <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#btnTableBooks" text="Books" />
+                  <Button fx:id="btnTableUsers" mnemonicParsing="false" onAction="#btnTableUsers" prefHeight="26.0" prefWidth="48.0" text="Users" />
+                  <Button fx:id="btnTableBooks" mnemonicParsing="false" onAction="#getOnAction" text="Books" />
                </children>
             </HBox>
          </children>
       </AnchorPane>
-      <TableView fx:id="tableUsers" layoutX="272.0" layoutY="109.0" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
+      <TableView fx:id="tableBooks" layoutX="272.0" layoutY="109.0" prefHeight="389.0" prefWidth="457.0" style="-fx-border-radius: 5; -fx-border-color: silver;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="109.0">
         <columns>
-          <TableColumn fx:id="userID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="34.39996337890625" text="ID" />
-          <TableColumn fx:id="userName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="84.79998779296875" text="Username" />
-            <TableColumn fx:id="userDocument" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="90.4000244140625" text="Document ID" />
-            <TableColumn fx:id="userPhone" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="67.20001220703125" text="Phone" />
-            <TableColumn fx:id="userAddress" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="72.79998779296875" text="Address" />
-            <TableColumn fx:id="userBooks" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="83.199951171875" resizable="false" text="Books" />
+          <TableColumn fx:id="bookID" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="34.39996337890625" text="ID" />
+          <TableColumn fx:id="bookName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="115.20001220703125" text="Bookname" />
+            <TableColumn fx:id="bookAuthor" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="136.0" text="Author" />
+            <TableColumn fx:id="bookGenre" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="78.4000244140625" text="Genre" />
+            <TableColumn fx:id="bookYear" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="68.79998779296875" text="Year" />
         </columns>
       </TableView>
    </children>
