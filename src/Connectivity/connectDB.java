@@ -1,17 +1,15 @@
-package sample;
+package Connectivity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class options {
-    public static Connection get_connection() {
-        /*
-         * Connecting to my external DMBS (PostgreSQL) using Java
-         */
+public class connectDB implements connectIDB {
+
+    public Connection getConnection() {
         Connection connection=null;
         try {
             Class.forName("org.postgresql.Driver");
-            connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/jdbc","postgres","shamiko");
+            connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/endterm","postgres","shamiko");
             if (connection!=null){
                 System.out.println("Connection OK");
             }else {
@@ -23,6 +21,4 @@ public class options {
         }
         return connection;
     }
-    public static Connection connection;
-
 }
