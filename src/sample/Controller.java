@@ -189,11 +189,11 @@ public class Controller {
             return;
         }
         tfUserID.setText(userID.getCellData(index).toString());
-        tfUserName.setText(userName.getCellData(index).toString());
-        tfUserDocument.setText(userDocument.getCellData(index).toString());
-        tfUserPhone.setText(userPhone.getCellData(index).toString());
-        tfUserAddress.setText(userAddress.getCellData(index).toString());
-        tfUserBooks.setText(userBooks.getCellData(index).toString());
+        tfUserName.setText(userName.getCellData(index));
+        tfUserDocument.setText(userDocument.getCellData(index));
+        tfUserPhone.setText(userPhone.getCellData(index));
+        tfUserAddress.setText(userAddress.getCellData(index));
+        tfUserBooks.setText(userBooks.getCellData(index));
 
     }
 
@@ -236,12 +236,12 @@ public class Controller {
     }
 
     public void UpdateTableUsers(){
-            userID.setCellValueFactory((new PropertyValueFactory<Users,Integer>("userID")));
-            userName.setCellValueFactory((new PropertyValueFactory<Users,String>("userName")));
-            userDocument.setCellValueFactory((new PropertyValueFactory<Users,String>("userDocument")));
-            userPhone.setCellValueFactory((new PropertyValueFactory<Users,String>("userPhone")));
-            userAddress.setCellValueFactory((new PropertyValueFactory<Users,String>("userAddress")));
-            userBooks.setCellValueFactory((new PropertyValueFactory<Users,String>("userBooks")));
+            userID.setCellValueFactory((new PropertyValueFactory<>("userID")));
+            userName.setCellValueFactory((new PropertyValueFactory<>("userName")));
+            userDocument.setCellValueFactory((new PropertyValueFactory<>("userDocument")));
+            userPhone.setCellValueFactory((new PropertyValueFactory<>("userPhone")));
+            userAddress.setCellValueFactory((new PropertyValueFactory<>("userAddress")));
+            userBooks.setCellValueFactory((new PropertyValueFactory<>("userBooks")));
 
             listM = connectDB.getDataUsers();
             tableUsers.setItems(listM);
@@ -250,12 +250,12 @@ public class Controller {
 
     @FXML
     void searchUser(){
-        userID.setCellValueFactory((new PropertyValueFactory<Users,Integer>("userID")));
-        userName.setCellValueFactory((new PropertyValueFactory<Users,String>("userName")));
-        userDocument.setCellValueFactory((new PropertyValueFactory<Users,String>("userDocument")));
-        userPhone.setCellValueFactory((new PropertyValueFactory<Users,String>("userPhone")));
-        userAddress.setCellValueFactory((new PropertyValueFactory<Users,String>("userAddress")));
-        userBooks.setCellValueFactory((new PropertyValueFactory<Users,String>("userBooks")));
+        userID.setCellValueFactory((new PropertyValueFactory<>("userID")));
+        userName.setCellValueFactory((new PropertyValueFactory<>("userName")));
+        userDocument.setCellValueFactory((new PropertyValueFactory<>("userDocument")));
+        userPhone.setCellValueFactory((new PropertyValueFactory<>("userPhone")));
+        userAddress.setCellValueFactory((new PropertyValueFactory<>("userAddress")));
+        userBooks.setCellValueFactory((new PropertyValueFactory<>("userBooks")));
 
         dataList = connectDB.getDataUsers();
         tableUsers.setItems(dataList);
@@ -275,13 +275,7 @@ public class Controller {
                     return true;
                 } else if (person.getUserAddress().toLowerCase().contains(lowerCaseFilter)){
                     return true;
-                } else if (person.getUserBooks().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                }
-
-
-                else
-                    return false; // Does not match.
+                } else return person.getUserBooks().toLowerCase().contains(lowerCaseFilter);
             });
         });
         SortedList<Users> sortedData = new SortedList<>(filteredData);
@@ -292,6 +286,5 @@ public class Controller {
     @FXML
     void initialize() {
         UpdateTableUsers();
-        searchUser();
     }
 }

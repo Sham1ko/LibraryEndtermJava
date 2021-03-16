@@ -34,12 +34,6 @@ import javax.swing.*;
 public class ControllerSecond {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private AnchorPane booksView;
 
     @FXML
@@ -129,7 +123,6 @@ public class ControllerSecond {
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
-
     }
 
     @FXML
@@ -183,10 +176,10 @@ public class ControllerSecond {
             return;
         }
         tfBookID.setText(bookID.getCellData(index).toString());
-        tfBookName.setText(bookName.getCellData(index).toString());
-        tfBookAuthor.setText(bookAuthor.getCellData(index).toString());
-        tfBookGenre.setText(bookGenre.getCellData(index).toString());
-        tfBookYear.setText(bookYear.getCellData(index).toString());
+        tfBookName.setText(bookName.getCellData(index));
+        tfBookAuthor.setText(bookAuthor.getCellData(index));
+        tfBookGenre.setText(bookGenre.getCellData(index));
+        tfBookYear.setText(bookYear.getCellData(index));
 
     }
 
@@ -194,7 +187,6 @@ public class ControllerSecond {
     void btnTableUsers(ActionEvent event){
         makeFadeOut();
     }
-
     private void makeFadeOut() {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(1000));
@@ -210,7 +202,6 @@ public class ControllerSecond {
         });
         fadeTransition.play();
     }
-
     private void loadNextScene(){
         try {
             Parent secondView;
@@ -228,26 +219,12 @@ public class ControllerSecond {
         }
     }
 
-
-    public void UpdateTableBooks(){
-        bookID.setCellValueFactory((new PropertyValueFactory<Books,Integer>("bookID")));
-        bookName.setCellValueFactory((new PropertyValueFactory<Books,String>("bookName")));
-        bookAuthor.setCellValueFactory((new PropertyValueFactory<Books,String>("bookAuthor")));
-        bookGenre.setCellValueFactory((new PropertyValueFactory<Books,String>("bookGenre")));
-        bookYear.setCellValueFactory((new PropertyValueFactory<Books,String>("bookYear")));
-
-        listN = connectDB.getDataBooks();
-        tableBooks.setItems(listN);
-        searchBook();
-    }
-
     @FXML
     void searchBook(){
-        bookID.setCellValueFactory((new PropertyValueFactory<Books,Integer>("bookID")));
-        bookName.setCellValueFactory((new PropertyValueFactory<Books,String>("bookName")));
-        bookAuthor.setCellValueFactory((new PropertyValueFactory<Books,String>("bookAuthor")));
-        bookGenre.setCellValueFactory((new PropertyValueFactory<Books,String>("bookGenre")));
-        bookYear.setCellValueFactory((new PropertyValueFactory<Books,String>("bookYear")));
+        bookName.setCellValueFactory((new PropertyValueFactory<>("bookName")));
+        bookAuthor.setCellValueFactory((new PropertyValueFactory<>("bookAuthor")));
+        bookGenre.setCellValueFactory((new PropertyValueFactory<>("bookGenre")));
+        bookYear.setCellValueFactory((new PropertyValueFactory<>("bookYear")));
 
         dataList = connectDB.getDataBooks();
         tableBooks.setItems(dataList);
@@ -265,13 +242,7 @@ public class ControllerSecond {
                     return true;
                 } else if (person.getBookGenre().toLowerCase().contains(lowerCaseFilter)){
                     return true;
-                } else if (person.getBookYear().toLowerCase().contains(lowerCaseFilter)){
-                    return true;
-                }
-
-
-                else
-                    return false; // Does not match.
+                } else return person.getBookYear().toLowerCase().contains(lowerCaseFilter);
             });
         });
         SortedList<Books> sortedData = new SortedList<>(filteredData);
@@ -279,9 +250,20 @@ public class ControllerSecond {
         tableBooks.setItems(sortedData);
     }
 
+    public void UpdateTableBooks(){
+        bookID.setCellValueFactory((new PropertyValueFactory<>("bookID")));
+        bookName.setCellValueFactory((new PropertyValueFactory<>("bookName")));
+        bookAuthor.setCellValueFactory((new PropertyValueFactory<>("bookAuthor")));
+        bookGenre.setCellValueFactory((new PropertyValueFactory<>("bookGenre")));
+        bookYear.setCellValueFactory((new PropertyValueFactory<>("bookYear")));
+
+        listN = connectDB.getDataBooks();
+        tableBooks.setItems(listN);
+        searchBook();
+    }
+
     @FXML
     void initialize() {
         UpdateTableBooks();
-        searchBook();
     }
 }

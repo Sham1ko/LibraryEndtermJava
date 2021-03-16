@@ -19,7 +19,7 @@ public class connectDB implements connectIDB {
             Class.forName("org.postgresql.Driver");
             connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/endterm","postgres","shamiko");
             if (connection!=null){
-                System.out.println("Connection OK.");
+                System.out.println("Connection OK.  ");
             }else {
                 System.out.println("Connection Failed");
             }
